@@ -28,8 +28,8 @@ public class ProjectSecurityConfig {
 
 	@Bean
 	UserDetailsService userDetailsService() {
-		UserDetails user = User.withUsername("user").password("{noop}12345").authorities("read").build();
-		UserDetails admin = User.withUsername("admin").password("{bcrypt}$2a$12$mHKuTXV3rZWOESwa2oXuGeRBr0EE.jsimp6f7GtPx/Y0pGjQpaJz2").authorities("admin").build();
+		UserDetails user = User.withUsername("user").password("{noop}EazyBytes@12345").authorities("read").build();
+		UserDetails admin = User.withUsername("admin").password("{bcrypt}$2a$12$/9LpqpmFCX1sptatVAWphO78c8cjnmv0XcNr.ioS.g70QUtDyBAb.").authorities("admin").build();
 		return new InMemoryUserDetailsManager(user, admin);
 	}
 
@@ -37,4 +37,10 @@ public class ProjectSecurityConfig {
 	PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
+
+	// Attivazione opzionale
+//	@Bean
+//	CompromisedPasswordChecker compromisedPasswordChecker() {
+//		return new HaveIBeenPwnedRestApiPasswordChecker();
+//	}
 }

@@ -10,7 +10,7 @@
 			"name": "springsec",
 			"item": [
 				{
-					"name": "/myAccounts",
+					"name": "/myAccount",
 					"request": {
 						"auth": {
 							"type": "basic",
@@ -215,7 +215,7 @@
 		},
 		{
 			"key": "password",
-			"value": "12345",
+			"value": "EazyBytes@12345",
 			"type": "string"
 		}
 	]
