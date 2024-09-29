@@ -1,15 +1,15 @@
 package com.eazybytes.springsec.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -27,10 +27,8 @@ public class ProjectSecurityConfig {
 	}
 
 	@Bean
-	UserDetailsService userDetailsService() {
-		UserDetails user = User.withUsername("user").password("{noop}EazyBytes@12345").authorities("read").build();
-		UserDetails admin = User.withUsername("admin").password("{bcrypt}$2a$12$/9LpqpmFCX1sptatVAWphO78c8cjnmv0XcNr.ioS.g70QUtDyBAb.").authorities("admin").build();
-		return new InMemoryUserDetailsManager(user, admin);
+	UserDetailsService userDetailsService(DataSource datasource) {
+	    return new JdbcUserDetailsManager(datasource);
 	}
 
 	@Bean

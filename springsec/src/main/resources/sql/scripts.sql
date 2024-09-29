@@ -15,5 +15,6 @@ create unique index ix_auth_username on authorities (username, authority);
 INSERT IGNORE INTO `users` VALUES ('user', '{noop}EazyBytes@12345', '1');
 INSERT IGNORE INTO `authorities` VALUES ('user', 'read');
 
+-- EazyBytes@54321
 INSERT IGNORE INTO `users` VALUES ('admin', '{bcrypt}$2a$12$/9LpqpmFCX1sptatVAWphO78c8cjnmv0XcNr.ioS.g70QUtDyBAb.', '1');
 INSERT IGNORE INTO `authorities` VALUES ('admin', 'admin');
