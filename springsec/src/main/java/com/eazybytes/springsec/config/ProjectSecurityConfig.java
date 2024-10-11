@@ -16,6 +16,7 @@ public class ProjectSecurityConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
+			.requiresChannel(rcc -> rcc.anyRequest().requiresInsecure())
 			.authorizeHttpRequests(req -> req
 				.requestMatchers("/myAccount", "/myBalance", "/myLoans", "/myCards").authenticated()
 				.requestMatchers("/notices", "/contact", "/register", "/error").permitAll())
