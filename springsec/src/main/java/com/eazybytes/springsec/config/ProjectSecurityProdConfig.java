@@ -9,6 +9,8 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.eazybytes.springsec.excaptionhandling.CustomBasicAuthenticationEntryPoint;
+
 @Configuration
 @Profile({ "prod" })
 public class ProjectSecurityProdConfig {
@@ -21,7 +23,8 @@ public class ProjectSecurityProdConfig {
 				.requestMatchers("/myAccount", "/myBalance", "/myLoans", "/myCards").authenticated()
 				.requestMatchers("/notices", "/contact", "/register", "/error").permitAll())
 			.formLogin(Customizer.withDefaults())
-			.httpBasic(Customizer.withDefaults())
+			.httpBasic(hbc ->hbc
+					.authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint()))
 			.csrf(csrfConfig -> csrfConfig.disable())
 			.build();
 	}
