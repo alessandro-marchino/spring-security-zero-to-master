@@ -9,7 +9,8 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.eazybytes.springsec.excaptionhandling.CustomBasicAuthenticationEntryPoint;
+import com.eazybytes.springsec.exceptionhandling.CustomAccessDeniedHandler;
+import com.eazybytes.springsec.exceptionhandling.CustomBasicAuthenticationEntryPoint;
 
 @Configuration
 @Profile({ "prod" })
@@ -25,6 +26,8 @@ public class ProjectSecurityProdConfig {
 			.formLogin(Customizer.withDefaults())
 			.httpBasic(hbc ->hbc
 					.authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint()))
+			.exceptionHandling(ehc -> ehc
+					.accessDeniedHandler(new CustomAccessDeniedHandler()))
 			.csrf(csrfConfig -> csrfConfig.disable())
 			.build();
 	}

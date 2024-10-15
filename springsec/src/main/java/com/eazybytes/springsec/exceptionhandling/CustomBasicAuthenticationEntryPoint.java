@@ -1,4 +1,4 @@
-package com.eazybytes.springsec.excaptionhandling;
+package com.eazybytes.springsec.exceptionhandling;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
