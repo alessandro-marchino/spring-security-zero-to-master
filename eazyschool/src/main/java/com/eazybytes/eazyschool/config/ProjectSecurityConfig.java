@@ -11,9 +11,16 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import lombok.RequiredArgsConstructor;
 
 @Configuration
+@RequiredArgsConstructor
 public class ProjectSecurityConfig {
+	private final AuthenticationSuccessHandler authenticationSuccessHandler;
+	private final AuthenticationFailureHandler authenticationFailureHandler;
 
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -26,7 +33,10 @@ public class ProjectSecurityConfig {
 						.loginPage("/login")
 						.usernameParameter("userId")
 						.passwordParameter("secretPwd")
-						.defaultSuccessUrl("/dashboard"))
+						.defaultSuccessUrl("/dashboard")
+						.failureUrl("/login?error=true")
+						.successHandler(authenticationSuccessHandler)
+						.failureHandler(authenticationFailureHandler))
 				.httpBasic(Customizer.withDefaults())
 				.build();
 	}
