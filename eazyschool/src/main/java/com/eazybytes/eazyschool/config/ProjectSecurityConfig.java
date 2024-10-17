@@ -22,7 +22,11 @@ public class ProjectSecurityConfig {
 				.authorizeHttpRequests(requests -> requests
 						.requestMatchers("/dashboard").authenticated()
 						.requestMatchers("/", "/login/**", "/home", "/holidays/**", "/contact", "/saveMsg", "/courses", "/about", "/assets/**").permitAll())
-				.formLogin(flc -> flc.loginPage("/login"))
+				.formLogin(flc -> flc
+						.loginPage("/login")
+						.usernameParameter("userId")
+						.passwordParameter("secretPwd")
+						.defaultSuccessUrl("/dashboard"))
 				.httpBasic(Customizer.withDefaults())
 				.build();
 	}
