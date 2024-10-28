@@ -12,10 +12,13 @@ import lombok.extern.slf4j.Slf4j;
 public class LoginController {
 
 	@GetMapping(value = "/login")
-	public String displayLoginPage(@RequestParam(value = "error", required = false) String error, Model model) {
+	public String displayLoginPage(@RequestParam(required = false) String error, @RequestParam(required=false) String logout, Model model) {
 		String errorMessage = null;
 		if(error != null) {
 			errorMessage = "Username or Password is incorrect!";
+		}
+		if(logout != null) {
+			errorMessage = "You have been successfully logged out!!";
 		}
 		model.addAttribute("errorMessage", errorMessage);
 		return "login.html";
