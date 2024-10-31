@@ -4,24 +4,21 @@ import { User } from '../model/user.model';
 
 @Injectable()
 export class AuthActivateRouteGuard {
-    user = new User();
-    
-    constructor(private router: Router){
+  constructor(private router: Router){}
 
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    let user = new User();
+    if(sessionStorage.getItem('userdetails')){
+      user = JSON.parse(sessionStorage.getItem('userdetails')!);
     }
-
-    canActivate(route:ActivatedRouteSnapshot, state:RouterStateSnapshot){
-        if(sessionStorage.getItem('userdetails')){
-            this.user = JSON.parse(sessionStorage.getItem('userdetails')!);
-        }
-        if(this.user.email.length===0){
-            this.router.navigate(['login']);
-        }
-        return this.user.email.length!==0?true:false;
+    if(user.email.length === 0){
+      this.router.navigate(['login']);
     }
+    return user.email.length !== 0;
+  }
 
 }
 
 export const AuthGuard: CanActivateFn = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
-    return inject(AuthActivateRouteGuard).canActivate(next, state);
-  }
+  return inject(AuthActivateRouteGuard).canActivate(next, state);
+}

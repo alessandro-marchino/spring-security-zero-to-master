@@ -10,13 +10,12 @@ export class DashboardComponent implements OnInit {
 
   user = new User();
 
-  constructor() {
-    
-  }
+  constructor() { }
 
   ngOnInit() {
-    if(sessionStorage.getItem('userdetails')){
-      this.user = JSON.parse(sessionStorage.getItem('userdetails') || "");
+    const userdetails = sessionStorage.getItem('userdetails');
+    if(userdetails){
+      this.user = JSON.parse(userdetails);
     }
   }
 

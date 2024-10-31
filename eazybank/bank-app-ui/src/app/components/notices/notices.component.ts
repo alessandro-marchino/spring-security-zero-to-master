@@ -8,15 +8,14 @@ import { DashboardService } from 'src/app/services/dashboard/dashboard.service';
 })
 export class NoticesComponent implements OnInit {
 
-  notices = new Array();
+  notices = [];
 
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
-    this.dashboardService.getNoticeDetails().subscribe(
-      responseData => {
+    this.dashboardService.getNoticeDetails().subscribe(responseData => {
       this.notices = <any> responseData.body;
-      });
+    });
   }
 
 }

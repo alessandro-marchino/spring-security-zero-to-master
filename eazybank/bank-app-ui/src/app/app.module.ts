@@ -44,11 +44,8 @@ import { HomeComponent } from './components/home/home.component';
     }),
   ],
   providers: [
-    {
-      provide : HTTP_INTERCEPTORS,
-      useClass : XhrInterceptor,
-      multi : true
-    },AuthActivateRouteGuard
+    { provide : HTTP_INTERCEPTORS, useClass : XhrInterceptor, multi : true },
+    AuthActivateRouteGuard
   ],
   bootstrap: [AppComponent]
 })

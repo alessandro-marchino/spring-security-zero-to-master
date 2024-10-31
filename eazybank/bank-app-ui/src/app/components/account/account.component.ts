@@ -16,12 +16,10 @@ export class AccountComponent implements OnInit {
   ngOnInit(): void {
     this.user = JSON.parse(sessionStorage.getItem('userdetails')!);
     if(this.user){
-      this.dashboardService.getAccountDetails(this.user.id).subscribe(
-        responseData => {
-        this.account = <any> responseData.body;
-        });
+      this.dashboardService.getAccountDetails(this.user.id).subscribe(responseData => {
+        this.account = responseData.body || new Account();
+      });
     }
-
   }
 
 }
