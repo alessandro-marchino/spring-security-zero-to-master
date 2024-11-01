@@ -2,32 +2,33 @@ package com.eazybytes.springsec.model;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
-@Entity
-public class Customer {
-
+@Table(name = "notice_details")
+public class Notice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long customerId;
-	private String email;
-	private String mobileNumber;
-	@JsonProperty(access = Access.WRITE_ONLY)
-	private String pwd;
-	private String role;
+	private Long noticeId;
+	private String noticeSummary;
+	private String noticeDetails;
+	@Temporal(TemporalType.DATE)
+	private LocalDate noticBegDt;
+	@Temporal(TemporalType.DATE)
+	private LocalDate noticEndDt;
 	@Temporal(TemporalType.DATE)
 	private LocalDate createDt;
+	@Temporal(TemporalType.DATE)
+	private LocalDate updateDt;
 
 }

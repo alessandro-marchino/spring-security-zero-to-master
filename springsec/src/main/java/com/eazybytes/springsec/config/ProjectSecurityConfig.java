@@ -26,7 +26,7 @@ public class ProjectSecurityConfig {
 							.maxSessionsPreventsLogin(true)))
 			.requiresChannel(rcc -> rcc.anyRequest().requiresInsecure())
 			.authorizeHttpRequests(req -> req
-				.requestMatchers("/myAccount", "/myBalance", "/myLoans", "/myCards").authenticated()
+				.requestMatchers("/myAccount", "/myBalance", "/myLoans", "/myCards", "/user").authenticated()
 				.requestMatchers("/notices", "/contact", "/register", "/error", "/invalidSession").permitAll())
 			.formLogin(Customizer.withDefaults())
 			.httpBasic(hbc ->hbc.authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint()))
