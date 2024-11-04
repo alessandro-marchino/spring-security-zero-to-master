@@ -2,6 +2,7 @@ package com.eazybytes.springsec.model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -29,6 +30,7 @@ public class Customer {
 	private String pwd;
 	private String role;
 	@Temporal(TemporalType.DATE)
+	@JsonIgnore
 	private LocalDate createDt;
 
 }
