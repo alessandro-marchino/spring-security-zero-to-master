@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Notice } from 'src/app/model/notice.model.ts';
 import { DashboardService } from 'src/app/services/dashboard/dashboard.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { DashboardService } from 'src/app/services/dashboard/dashboard.service';
 })
 export class NoticesComponent implements OnInit {
 
-  notices = [];
+  notices: Notice[] = [];
 
   constructor(private dashboardService: DashboardService) { }
 

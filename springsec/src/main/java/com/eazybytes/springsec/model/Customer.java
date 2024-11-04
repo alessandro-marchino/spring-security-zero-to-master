@@ -22,6 +22,7 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long customerId;
+	private String name;
 	private String email;
 	private String mobileNumber;
 	@JsonProperty(access = Access.WRITE_ONLY)
