@@ -47,8 +47,9 @@ public class ProjectSecurityProdConfig {
 			.httpBasic(hbc ->hbc.authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint()))
 			.exceptionHandling(ehc -> ehc.accessDeniedHandler(new CustomAccessDeniedHandler()))
 			.csrf(csrfConfig -> csrfConfig
-					.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-					.csrfTokenRequestHandler(csrfTokenRequestHandler))
+				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+				.csrfTokenRequestHandler(csrfTokenRequestHandler)
+				.ignoringRequestMatchers("/contact", "/register"))
 			.build();
 	}
 

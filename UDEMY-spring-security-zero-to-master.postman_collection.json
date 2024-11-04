@@ -16,13 +16,13 @@
 							"type": "basic",
 							"basic": [
 								{
-									"key": "password",
-									"value": "{{password}}",
+									"key": "username",
+									"value": "{{username}}",
 									"type": "string"
 								},
 								{
-									"key": "username",
-									"value": "{{username}}",
+									"key": "password",
+									"value": "{{password}}",
 									"type": "string"
 								}
 							]
@@ -187,7 +187,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"john@example.com\",\r\n    \"pwd\": \"EazyBytes@12345\",\r\n    \"role\": \"user\"\r\n}",
+							"raw": "{\r\n    \"name\": \"John Doe\",\r\n    \"email\": \"john@example.com\",\r\n    \"mobileNumber\": \"4564747484\",\r\n    \"pwd\": \"EazyBytes@12345\",\r\n    \"role\": \"user\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -201,6 +201,79 @@
 							],
 							"path": [
 								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/contact",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contactName\": \"Madan Reddy\",\r\n    \"contactEmail\": \"tutor@eazybytes.com\",\r\n    \"subject\": \"Need a new saving account\",\r\n    \"message\": \"I want to open a new saving account in EazyBank\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"John Doe\",\r\n    \"email\": \"john@example.com\",\r\n    \"mobileNumber\": \"4564747484\",\r\n    \"pwd\": \"EazyBytes@12345\",\r\n    \"role\": \"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
 							]
 						}
 					},
