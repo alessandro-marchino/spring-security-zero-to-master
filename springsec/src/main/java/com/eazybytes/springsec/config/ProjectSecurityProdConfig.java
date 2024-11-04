@@ -1,5 +1,7 @@
 package com.eazybytes.springsec.config;
 
+import java.util.Collections;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -8,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
 
 import com.eazybytes.springsec.exceptionhandling.CustomAccessDeniedHandler;
 import com.eazybytes.springsec.exceptionhandling.CustomBasicAuthenticationEntryPoint;
@@ -19,6 +22,15 @@ public class ProjectSecurityProdConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
+			.cors(cc -> cc.configurationSource(request -> {
+				CorsConfiguration config = new CorsConfiguration();
+				config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+				config.setAllowedMethods(Collections.singletonList("*"));
+				config.setAllowCredentials(Boolean.TRUE);
+				config.setAllowedHeaders(Collections.singletonList("*"));
+				config.setMaxAge(3600L);
+				return config;
+			}))
 			.sessionManagement(smc -> smc
 				.invalidSessionUrl("/invalidSession")
 				.sessionConcurrency(scc -> scc
