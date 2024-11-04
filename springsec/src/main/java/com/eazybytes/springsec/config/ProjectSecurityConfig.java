@@ -41,7 +41,6 @@ public class ProjectSecurityConfig {
 			}))
 			.sessionManagement(smc -> smc
 					.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-					.invalidSessionUrl("/invalidSession")
 					.sessionConcurrency(scc -> scc
 							.maximumSessions(3)
 							.maxSessionsPreventsLogin(true)))
