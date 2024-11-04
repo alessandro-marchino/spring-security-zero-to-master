@@ -2,6 +2,8 @@ package com.eazybytes.springsec.model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,8 +29,10 @@ public class Notice {
 	@Temporal(TemporalType.DATE)
 	private LocalDate noticEndDt;
 	@Temporal(TemporalType.DATE)
+	@JsonIgnore
 	private LocalDate createDt;
 	@Temporal(TemporalType.DATE)
+	@JsonIgnore
 	private LocalDate updateDt;
 
 }
