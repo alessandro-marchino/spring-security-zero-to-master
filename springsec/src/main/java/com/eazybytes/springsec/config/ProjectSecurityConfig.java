@@ -47,7 +47,11 @@ public class ProjectSecurityConfig {
 			.securityContext(scc -> scc.requireExplicitSave(false))
 			.requiresChannel(rcc -> rcc.anyRequest().requiresInsecure())
 			.authorizeHttpRequests(req -> req
-				.requestMatchers("/myAccount", "/myBalance", "/myLoans", "/myCards", "/user").authenticated()
+				.requestMatchers("/myAccount").hasAuthority("VIEWACCOUNT")
+				.requestMatchers("/myBalance").hasAnyAuthority("VIEWBALANCE", "VIEWACCOUNT")
+				.requestMatchers("/myLoans").hasAuthority("VIEWLOANS")
+				.requestMatchers("/myCards").hasAuthority("VIEWCARDS")
+				.requestMatchers("/user").authenticated()
 				.requestMatchers("/notices", "/contact", "/register", "/error", "/invalidSession").permitAll())
 			.formLogin(Customizer.withDefaults())
 			.httpBasic(hbc ->hbc.authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint()))

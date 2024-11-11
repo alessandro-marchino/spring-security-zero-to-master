@@ -27,7 +27,7 @@ public class ProjectSecurityProdConfig {
 		return http
 			.cors(cc -> cc.configurationSource(request -> {
 				CorsConfiguration config = new CorsConfiguration();
-				config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+				config.setAllowedOrigins(Collections.singletonList("https://localhost:4200"));
 				config.setAllowedMethods(Collections.singletonList("*"));
 				config.setAllowCredentials(Boolean.TRUE);
 				config.setAllowedHeaders(Collections.singletonList("*"));
@@ -41,7 +41,11 @@ public class ProjectSecurityProdConfig {
 					.maxSessionsPreventsLogin(true)))
 			.requiresChannel(rcc -> rcc.anyRequest().requiresSecure())
 			.authorizeHttpRequests(req -> req
-				.requestMatchers("/myAccount", "/myBalance", "/myLoans", "/myCards", "/user").authenticated()
+				.requestMatchers("/myAccount").hasAuthority("VIEWACCOUNT")
+				.requestMatchers("/myBalance").hasAnyAuthority("VIEWBALANCE", "VIEWACCOUNT")
+				.requestMatchers("/myLoans").hasAuthority("VIEWLOANS")
+				.requestMatchers("/myCards").hasAuthority("VIEWCARDS")
+				.requestMatchers("/user").authenticated()
 				.requestMatchers("/notices", "/contact", "/register", "/error", "/invalidSession").permitAll())
 			.formLogin(Customizer.withDefaults())
 			.httpBasic(hbc ->hbc.authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint()))
