@@ -1,15 +1,18 @@
 package com.eazybytes.springsec.model;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.Getter;
@@ -32,5 +35,9 @@ public class Customer {
 	@Temporal(TemporalType.DATE)
 	@JsonIgnore
 	private LocalDate createDt;
+
+	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+	@JsonIgnore
+	private Set<Authority> authorities;
 
 }
