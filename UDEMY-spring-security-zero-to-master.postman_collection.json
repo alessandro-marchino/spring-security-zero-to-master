@@ -30,12 +30,18 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/myAccount",
+							"raw": "{{baseUrl}}/myAccount?id={{id}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"myAccount"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{id}}"
+								}
 							]
 						}
 					},
@@ -62,12 +68,18 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/myBalance",
+							"raw": "{{baseUrl}}/myBalance?id={{id}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"myBalance"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{id}}"
+								}
 							]
 						}
 					},
@@ -94,12 +106,18 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/myCards",
+							"raw": "{{baseUrl}}/myCards?id={{id}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"myCards"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{id}}"
+								}
 							]
 						}
 					},
@@ -126,32 +144,18 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/myLoans",
+							"raw": "{{baseUrl}}/myLoans?id={{id}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"myLoans"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/contact",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/contact",
-							"host": [
-								"{{baseUrl}}"
 							],
-							"path": [
-								"contact"
+							"query": [
+								{
+									"key": "id",
+									"value": "{{id}}"
+								}
 							]
 						}
 					},
@@ -312,12 +316,17 @@
 		},
 		{
 			"key": "username",
-			"value": "user",
+			"value": "happy@example.com",
 			"type": "string"
 		},
 		{
 			"key": "password",
 			"value": "EazyBytes@12345",
+			"type": "string"
+		},
+		{
+			"key": "id",
+			"value": "1",
 			"type": "string"
 		}
 	]
