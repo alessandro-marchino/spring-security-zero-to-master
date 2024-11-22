@@ -18,6 +18,7 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import com.eazybytes.springsec.exceptionhandling.CustomAccessDeniedHandler;
 import com.eazybytes.springsec.exceptionhandling.CustomBasicAuthenticationEntryPoint;
+import com.eazybytes.springsec.filter.AuthoritiesLoggerAfterFilter;
 import com.eazybytes.springsec.filter.CsrfCookieFilter;
 import com.eazybytes.springsec.filter.RequestValidationBeforeFilter;
 
@@ -63,6 +64,7 @@ public class ProjectSecurityConfig {
 				.ignoringRequestMatchers("/contact", "/register"))
 			.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
 			.addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+			.addFilterAfter(new AuthoritiesLoggerAfterFilter(), BasicAuthenticationFilter.class)
 			.build();
 	}
 
