@@ -10,12 +10,17 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfiguration;
 
 import com.eazybytes.springsec.exceptionhandling.CustomAccessDeniedHandler;
 import com.eazybytes.springsec.exceptionhandling.CustomBasicAuthenticationEntryPoint;
+import com.eazybytes.springsec.filter.AuthoritiesLoggerAfterFilter;
+import com.eazybytes.springsec.filter.AuthoritiesLoggingAtFilter;
+import com.eazybytes.springsec.filter.CsrfCookieFilter;
+import com.eazybytes.springsec.filter.RequestValidationBeforeFilter;
 
 @Configuration
 @Profile({ "prod" })
@@ -54,6 +59,10 @@ public class ProjectSecurityProdConfig {
 				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 				.csrfTokenRequestHandler(csrfTokenRequestHandler)
 				.ignoringRequestMatchers("/contact", "/register"))
+			.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+			.addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+			.addFilterAfter(new AuthoritiesLoggerAfterFilter(), BasicAuthenticationFilter.class)
+			.addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class)
 			.build();
 	}
 
