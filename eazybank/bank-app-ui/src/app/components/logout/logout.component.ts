@@ -12,6 +12,7 @@ export class LogoutComponent implements OnInit {
   constructor(private router : Router) { }
 
   ngOnInit(): void {
+    window.sessionStorage.removeItem('Authorization');
     window.sessionStorage.removeItem("userdetails");
     window.sessionStorage.removeItem("XSRF-TOKEN");
     this.router.navigate(['/login']);
