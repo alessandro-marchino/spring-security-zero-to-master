@@ -36,7 +36,7 @@ public class JWTTokenValidatorFilter extends OncePerRequestFilter {
 				SecretKey secretKey = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
 				
 				JwtParser jwtParser = Jwts.parser().verifyWith(secretKey).build();
-				Claims claims = jwtParser.parseSignedClaims(jwt).getPayload();
+				Claims claims = jwtParser.parseSignedClaims(jwt.substring(7)).getPayload();
 				String username = claims.get("username", String.class);
 				String authorities = claims.get("authorities", String.class);
 				

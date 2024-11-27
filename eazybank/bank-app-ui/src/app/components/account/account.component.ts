@@ -16,7 +16,7 @@ export class AccountComponent implements OnInit {
   ngOnInit(): void {
     this.user = JSON.parse(sessionStorage.getItem('userdetails')!);
     if(this.user){
-      this.dashboardService.getAccountDetails(this.user.id).subscribe(responseData => {
+      this.dashboardService.getAccountDetails(this.user.customerId).subscribe(responseData => {
         this.account = responseData.body || new Account();
       });
     }

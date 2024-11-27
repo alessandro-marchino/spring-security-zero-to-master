@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Cards } from 'src/app/model/cards.model';
 import { DashboardService } from '../../services/dashboard/dashboard.service';
+import { User } from 'src/app/model/user.model';
 
 
 @Component({
@@ -16,9 +17,9 @@ export class CardsComponent implements OnInit {
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
-    const user = JSON.parse(sessionStorage.getItem('userdetails') || "");
+    const user = JSON.parse(sessionStorage.getItem('userdetails') || "") as User;
     if(user){
-      this.dashboardService.getCardsDetails(user.id).subscribe(responseData => {
+      this.dashboardService.getCardsDetails(user.customerId).subscribe(responseData => {
         this.cards = responseData.body || [];
         this.cards.forEach((card: Cards) => {
           this.currOutstandingAmt += card.availableAmount;
