@@ -11,7 +11,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import com.eazybytes.springsec.constants.ApplicationConstants;
 
@@ -23,8 +25,12 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 
+@Component
+@RequiredArgsConstructor
 public class JWTTokenValidatorFilter extends OncePerRequestFilter {
+	private final HandlerExceptionResolver handlerExceptionResolver;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -43,7 +49,7 @@ public class JWTTokenValidatorFilter extends OncePerRequestFilter {
 				Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, AuthorityUtils.commaSeparatedStringToAuthorityList(authorities));
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			}catch(Exception e) {
-				throw new BadCredentialsException("Invalid Token received");
+				handlerExceptionResolver.resolveException(request, response, null, new BadCredentialsException("Invalid Token received"));
 			}
 		}
 		filterChain.doFilter(request, response);

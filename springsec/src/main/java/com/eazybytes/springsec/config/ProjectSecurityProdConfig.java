@@ -26,9 +26,13 @@ import com.eazybytes.springsec.filter.JWTTokenGeneratorFilter;
 import com.eazybytes.springsec.filter.JWTTokenValidatorFilter;
 import com.eazybytes.springsec.filter.RequestValidationBeforeFilter;
 
+import lombok.RequiredArgsConstructor;
+
 @Configuration
+@RequiredArgsConstructor
 @Profile({ "prod" })
 public class ProjectSecurityProdConfig {
+	private final JWTTokenValidatorFilter jwtTokenValidatorFilter;
 
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -65,7 +69,7 @@ public class ProjectSecurityProdConfig {
 			.addFilterAfter(new AuthoritiesLoggerAfterFilter(), BasicAuthenticationFilter.class)
 			.addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class)
 			.addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
-			.addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
+			.addFilterBefore(jwtTokenValidatorFilter, BasicAuthenticationFilter.class)
 			.build();
 	}
 
