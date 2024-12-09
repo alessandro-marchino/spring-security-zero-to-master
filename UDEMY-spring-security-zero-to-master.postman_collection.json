@@ -13,16 +13,11 @@
 					"name": "/myAccount",
 					"request": {
 						"auth": {
-							"type": "basic",
-							"basic": [
+							"type": "bearer",
+							"bearer": [
 								{
-									"key": "username",
-									"value": "{{username}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "{{password}}",
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJFYXp5IEJhbmsiLCJzdWIiOiJKV1QgVG9rZW4iLCJ1c2VybmFtZSI6ImhhcHB5QGV4YW1wbGUuY29tIiwiYXV0aG9yaXRpZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTczMzc0OTUzOCwiZXhwIjoxNzMzNzc4MzM4fQ.VKUbodA_rOfHQns-lcAqbp3Pj9RZCWAXZ9fEfdXLLfel_13tINrybnOjVu-iEiFkMqrWCXmXJDIR4FSYycf3qw",
 									"type": "string"
 								}
 							]
@@ -205,6 +200,35 @@
 							],
 							"path": [
 								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/apiLogin",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"happy@example.com\",\r\n    \"password\": \"EazyBytes@12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/apiLogin",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"apiLogin"
 							]
 						}
 					},

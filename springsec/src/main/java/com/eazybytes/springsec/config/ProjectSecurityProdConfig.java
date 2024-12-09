@@ -6,9 +6,13 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -35,6 +39,14 @@ public class ProjectSecurityProdConfig {
 	private final JWTTokenValidatorFilter jwtTokenValidatorFilter;
 
 	@Bean
+	AuthenticationManager authenticationManager(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+		AuthenticationProvider authenticationProvider = new EazyBankProdUsernamePwdAuthenticationProvider(userDetailsService, passwordEncoder);
+		ProviderManager providerManager = new ProviderManager(authenticationProvider);
+		providerManager.setEraseCredentialsAfterAuthentication(false);
+		return providerManager;
+	}
+
+	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		CsrfTokenRequestAttributeHandler csrfTokenRequestHandler = new CsrfTokenRequestAttributeHandler();
 		return http
@@ -56,14 +68,14 @@ public class ProjectSecurityProdConfig {
 				.requestMatchers("/myLoans").hasRole("USER")
 				.requestMatchers("/myCards").hasRole("USER")
 				.requestMatchers("/user").authenticated()
-				.requestMatchers("/notices", "/contact", "/register", "/error").permitAll())
+				.requestMatchers("/notices", "/contact", "/register", "/error", "/apiLogin").permitAll())
 			.formLogin(Customizer.withDefaults())
 			.httpBasic(hbc ->hbc.authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint()))
 			.exceptionHandling(ehc -> ehc.accessDeniedHandler(new CustomAccessDeniedHandler()))
 			.csrf(csrfConfig -> csrfConfig
 				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 				.csrfTokenRequestHandler(csrfTokenRequestHandler)
-				.ignoringRequestMatchers("/contact", "/register"))
+				.ignoringRequestMatchers("/contact", "/register", "/apiLogin"))
 			.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
 			.addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
 			.addFilterAfter(new AuthoritiesLoggerAfterFilter(), BasicAuthenticationFilter.class)

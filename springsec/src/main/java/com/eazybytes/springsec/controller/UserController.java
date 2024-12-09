@@ -73,8 +73,8 @@ public class UserController {
 			jwt = Jwts.builder()
 				.issuer("Eazy Bank")
 				.subject("JWT Token")
-				.claim("username", authentication.getName())
-				.claim("authorities", authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(",")))
+				.claim("username", authenticationResponse.getName())
+				.claim("authorities", authenticationResponse.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(",")))
 				.issuedAt(new Date())
 				// 8 hours
 				.expiration(new Date(new Date().getTime() + 28800000))
