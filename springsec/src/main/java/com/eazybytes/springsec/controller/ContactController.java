@@ -1,10 +1,10 @@
 package com.eazybytes.springsec.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.springframework.security.access.prepost.PreFilter;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,15 +21,18 @@ public class ContactController {
 	private final ContactRepository contactRepository;
 
 	@PostMapping("/contact")
-	@PreFilter("filterObject.contactName != 'TEST'")
-	public Contact saveContactInquiryDetails(@RequestBody List<Contact> contacts) {
+//	@PreFilter("filterObject.contactName != 'TEST'")
+//	@PostFilter("filterObject.contactName != 'TEST'")
+	public List<Contact> saveContactInquiryDetails(@RequestBody List<Contact> contacts) {
 		if(contacts.isEmpty()) {
-			return null;
+			return List.of();
 		}
+		List<Contact> returnContacts = new ArrayList<>();
 		Contact contact = contacts.getFirst();
 		contact.setContactId(getServiceReqNumber());
 		contact.setCreateDt(LocalDate.now());
-		return contactRepository.save(contact);
+		returnContacts.add(contactRepository.save(contact));
+		return returnContacts;
 	}
 	private String getServiceReqNumber() {
 		Random random = new Random();

@@ -11,6 +11,7 @@ import { DashboardService } from 'src/app/services/dashboard/dashboard.service';
 })
 export class ContactComponent implements OnInit {
   model = new Contact();
+  contacts: Contact[] = [];
 
   constructor(private dashboardService: DashboardService) { }
 
@@ -18,7 +19,8 @@ export class ContactComponent implements OnInit {
 
   saveMessage(contactForm: NgForm) {
     this.dashboardService.saveMessage(this.model).subscribe(responseData => {
-      this.model = <any> responseData.body;
+      this.contacts = responseData.body as Contact[];
+      this.contacts.forEach(c => this.model = c);
       contactForm.resetForm();
     });
   }
