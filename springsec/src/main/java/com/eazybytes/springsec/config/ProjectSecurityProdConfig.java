@@ -67,7 +67,7 @@ public class ProjectSecurityProdConfig {
 			.authorizeHttpRequests(req -> req
 				.requestMatchers("/myAccount").hasRole("USER")
 				.requestMatchers("/myBalance").hasAnyRole("USER", "ADMIN")
-				.requestMatchers("/myLoans").hasRole("USER")
+				.requestMatchers("/myLoans").authenticated()
 				.requestMatchers("/myCards").hasRole("USER")
 				.requestMatchers("/user").authenticated()
 				.requestMatchers("/notices", "/contact", "/register", "/error", "/apiLogin").permitAll())
