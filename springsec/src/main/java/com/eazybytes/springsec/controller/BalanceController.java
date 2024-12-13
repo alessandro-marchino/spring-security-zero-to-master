@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eazybytes.springsec.model.AccountTransactions;
 import com.eazybytes.springsec.repository.AccountTransactionsRepository;
+import com.eazybytes.springsec.repository.CustomerRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,9 +17,12 @@ import lombok.RequiredArgsConstructor;
 public class BalanceController {
 
 	private final AccountTransactionsRepository accountTransactionsRepository;
+	private final CustomerRepository customerRepository;
 
 	@GetMapping("/myBalance")
-	public List<AccountTransactions> getBalanceDetails(@RequestParam Long id) {
-		return accountTransactionsRepository.findByCustomerIdOrderByTransactionDtDesc(id);
+	public List<AccountTransactions> getBalanceDetails(@RequestParam String email) {
+		return customerRepository.findByEmail(email)
+			.map(c -> accountTransactionsRepository.findByCustomerIdOrderByTransactionDtDesc(c.getCustomerId()))
+			.orElse(null);
 	}
 }

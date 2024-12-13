@@ -6,10 +6,10 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -17,7 +17,6 @@ import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfiguration;
 
 import com.eazybytes.springsec.exceptionhandling.CustomAccessDeniedHandler;
-import com.eazybytes.springsec.exceptionhandling.CustomBasicAuthenticationEntryPoint;
 import com.eazybytes.springsec.filter.CsrfCookieFilter;
 
 import lombok.RequiredArgsConstructor;
@@ -30,6 +29,8 @@ public class ProjectSecurityProdConfig {
 
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+		jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(new KeycloakRoleConverter());
 		CsrfTokenRequestAttributeHandler csrfTokenRequestHandler = new CsrfTokenRequestAttributeHandler();
 		return http
 			.cors(cc -> cc.configurationSource(request -> {
@@ -50,14 +51,14 @@ public class ProjectSecurityProdConfig {
 				.requestMatchers("/myLoans").authenticated()
 				.requestMatchers("/myCards").hasRole("USER")
 				.requestMatchers("/user").authenticated()
-				.requestMatchers("/notices", "/contact", "/register", "/error", "/apiLogin").permitAll())
-			.formLogin(Customizer.withDefaults())
-			.httpBasic(hbc ->hbc.authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint()))
+				.requestMatchers("/notices", "/contact", "/register", "/error").permitAll())
+			.oauth2ResourceServer(rsc -> rsc
+				.jwt(jc -> jc.jwtAuthenticationConverter(jwtAuthenticationConverter)))
 			.exceptionHandling(ehc -> ehc.accessDeniedHandler(new CustomAccessDeniedHandler()))
 			.csrf(csrfConfig -> csrfConfig
 				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 				.csrfTokenRequestHandler(csrfTokenRequestHandler)
-				.ignoringRequestMatchers("/contact", "/register", "/apiLogin"))
+				.ignoringRequestMatchers("/contact", "/register"))
 			.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
 			.build();
 	}
