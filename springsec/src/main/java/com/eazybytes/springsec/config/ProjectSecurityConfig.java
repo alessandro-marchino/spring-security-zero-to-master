@@ -6,16 +6,10 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -24,12 +18,7 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import com.eazybytes.springsec.exceptionhandling.CustomAccessDeniedHandler;
 import com.eazybytes.springsec.exceptionhandling.CustomBasicAuthenticationEntryPoint;
-import com.eazybytes.springsec.filter.AuthoritiesLoggerAfterFilter;
-import com.eazybytes.springsec.filter.AuthoritiesLoggingAtFilter;
 import com.eazybytes.springsec.filter.CsrfCookieFilter;
-import com.eazybytes.springsec.filter.JWTTokenGeneratorFilter;
-import com.eazybytes.springsec.filter.JWTTokenValidatorFilter;
-import com.eazybytes.springsec.filter.RequestValidationBeforeFilter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -38,15 +27,6 @@ import lombok.RequiredArgsConstructor;
 @Profile({ "!prod" })
 @EnableMethodSecurity(securedEnabled = true,jsr250Enabled = true)
 public class ProjectSecurityConfig {
-	private final JWTTokenValidatorFilter jwtTokenValidatorFilter;
-
-	@Bean
-	AuthenticationManager authenticationManager(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
-		AuthenticationProvider authenticationProvider = new EazyBankUsernamePwdAuthenticationProvider(userDetailsService);
-		ProviderManager providerManager = new ProviderManager(authenticationProvider);
-		providerManager.setEraseCredentialsAfterAuthentication(false);
-		return providerManager;
-	}
 
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -81,22 +61,7 @@ public class ProjectSecurityConfig {
 				.csrfTokenRequestHandler(csrfTokenRequestHandler)
 				.ignoringRequestMatchers("/contact", "/register", "/apiLogin"))
 			.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
-			.addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
-			.addFilterAfter(new AuthoritiesLoggerAfterFilter(), BasicAuthenticationFilter.class)
-			.addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class)
-			.addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
-			.addFilterBefore(jwtTokenValidatorFilter, BasicAuthenticationFilter.class)
 			.build();
 	}
 
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-	}
-
-	// Attivazione opzionale
-//	@Bean
-//	CompromisedPasswordChecker compromisedPasswordChecker() {
-//		return new HaveIBeenPwnedRestApiPasswordChecker();
-//	}
 }
