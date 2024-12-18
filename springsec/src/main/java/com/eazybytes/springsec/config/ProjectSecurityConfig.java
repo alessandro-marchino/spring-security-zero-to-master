@@ -26,6 +26,12 @@ import lombok.RequiredArgsConstructor;
 @Profile({ "!prod" })
 @EnableMethodSecurity(securedEnabled = true,jsr250Enabled = true)
 public class ProjectSecurityConfig {
+//	@Value("${spring.security.oauth2.resourceserver.opaquetoken.introspection-uri}")
+//	private String introspectionUri;
+//	@Value("${spring.security.oauth2.resourceserver.opaquetoken.client-id}")
+//	private String introspectionClientId;
+//	@Value("${spring.security.oauth2.resourceserver.opaquetoken.client-secret}")
+//	private String introspectionClientSecret;
 
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -55,10 +61,14 @@ public class ProjectSecurityConfig {
 				.requestMatchers("/user").authenticated()
 				.requestMatchers("/notices", "/contact", "/register", "/error").permitAll())
 			.exceptionHandling(ehc -> ehc.accessDeniedHandler(new CustomAccessDeniedHandler()))
-//			.oauth2ResourceServer(rsc -> rsc
-//				.jwt(jc -> jc.jwtAuthenticationConverter(jwtAuthenticationConverter)))
 			.oauth2ResourceServer(rsc -> rsc
-					.opaqueToken(otc -> otc.authenticationConverter(new KeycloakOpaqueRoleConverter())))
+				.jwt(jc -> jc.jwtAuthenticationConverter(jwtAuthenticationConverter)))
+//			.oauth2ResourceServer(rsc -> rsc
+//				.opaqueToken(otc -> otc
+//					.authenticationConverter(new KeycloakOpaqueRoleConverter())
+//					.introspectionUri(introspectionUri)
+//					.introspectionClientCredentials(introspectionClientId, introspectionClientSecret)
+//				))
 			.csrf(csrfConfig -> csrfConfig
 				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 				.csrfTokenRequestHandler(csrfTokenRequestHandler)
