@@ -13,11 +13,56 @@
 					"name": "/myAccount",
 					"request": {
 						"auth": {
-							"type": "bearer",
-							"bearer": [
+							"type": "oauth2",
+							"oauth2": [
 								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJFYXp5IEJhbmsiLCJzdWIiOiJKV1QgVG9rZW4iLCJ1c2VybmFtZSI6ImhhcHB5QGV4YW1wbGUuY29tIiwiYXV0aG9yaXRpZXMiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImlhdCI6MTczMzc0OTUzOCwiZXhwIjoxNzMzNzc4MzM4fQ.VKUbodA_rOfHQns-lcAqbp3Pj9RZCWAXZ9fEfdXLLfel_13tINrybnOjVu-iEiFkMqrWCXmXJDIR4FSYycf3qw",
+									"key": "scope",
+									"value": "openid email",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "{{oauth2clientSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "{{oauth2clientId}}",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "{{tokenEndpoint}}",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "SpringSecurityZeroToMaster",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "{{hostKeycloak}}/realms/master/protocol/openid-connect/auth",
+									"type": "string"
+								},
+								{
+									"key": "state",
+									"value": "{{$guid}}",
+									"type": "string"
+								},
+								{
+									"key": "useBrowser",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
 									"type": "string"
 								}
 							]
@@ -25,7 +70,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/myAccount?id={{id}}",
+							"raw": "{{baseUrl}}/myAccount?email={{email}}",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -34,8 +79,8 @@
 							],
 							"query": [
 								{
-									"key": "id",
-									"value": "{{id}}"
+									"key": "email",
+									"value": "{{email}}"
 								}
 							]
 						}
@@ -46,16 +91,56 @@
 					"name": "/myBalance",
 					"request": {
 						"auth": {
-							"type": "basic",
-							"basic": [
+							"type": "oauth2",
+							"oauth2": [
 								{
-									"key": "password",
-									"value": "{{password}}",
+									"key": "scope",
+									"value": "openid email",
 									"type": "string"
 								},
 								{
-									"key": "username",
-									"value": "{{username}}",
+									"key": "clientSecret",
+									"value": "{{oauth2clientSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "{{oauth2clientId}}",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "{{tokenEndpoint}}",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "SpringSecurityZeroToMaster",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "{{hostKeycloak}}/realms/master/protocol/openid-connect/auth",
+									"type": "string"
+								},
+								{
+									"key": "state",
+									"value": "{{$guid}}",
+									"type": "string"
+								},
+								{
+									"key": "useBrowser",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
 									"type": "string"
 								}
 							]
@@ -63,7 +148,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/myBalance?id={{id}}",
+							"raw": "{{baseUrl}}/myBalance?email={{email}}",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -72,8 +157,8 @@
 							],
 							"query": [
 								{
-									"key": "id",
-									"value": "{{id}}"
+									"key": "email",
+									"value": "{{email}}"
 								}
 							]
 						}
@@ -84,16 +169,56 @@
 					"name": "/myCards",
 					"request": {
 						"auth": {
-							"type": "basic",
-							"basic": [
+							"type": "oauth2",
+							"oauth2": [
 								{
-									"key": "password",
-									"value": "{{password}}",
+									"key": "scope",
+									"value": "openid email",
 									"type": "string"
 								},
 								{
-									"key": "username",
-									"value": "{{username}}",
+									"key": "clientSecret",
+									"value": "{{oauth2clientSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "{{oauth2clientId}}",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "{{tokenEndpoint}}",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "SpringSecurityZeroToMaster",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "{{hostKeycloak}}/realms/master/protocol/openid-connect/auth",
+									"type": "string"
+								},
+								{
+									"key": "state",
+									"value": "{{$guid}}",
+									"type": "string"
+								},
+								{
+									"key": "useBrowser",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
 									"type": "string"
 								}
 							]
@@ -101,7 +226,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/myCards?id={{id}}",
+							"raw": "{{baseUrl}}/myCards?email={{email}}",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -110,8 +235,8 @@
 							],
 							"query": [
 								{
-									"key": "id",
-									"value": "{{id}}"
+									"key": "email",
+									"value": "{{email}}"
 								}
 							]
 						}
@@ -122,16 +247,56 @@
 					"name": "/myLoans",
 					"request": {
 						"auth": {
-							"type": "basic",
-							"basic": [
+							"type": "oauth2",
+							"oauth2": [
 								{
-									"key": "password",
-									"value": "{{password}}",
+									"key": "scope",
+									"value": "openid email",
 									"type": "string"
 								},
 								{
-									"key": "username",
-									"value": "{{username}}",
+									"key": "clientSecret",
+									"value": "{{oauth2clientSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "{{oauth2clientId}}",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "{{tokenEndpoint}}",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "SpringSecurityZeroToMaster",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "{{hostKeycloak}}/realms/master/protocol/openid-connect/auth",
+									"type": "string"
+								},
+								{
+									"key": "state",
+									"value": "{{$guid}}",
+									"type": "string"
+								},
+								{
+									"key": "useBrowser",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
 									"type": "string"
 								}
 							]
@@ -139,7 +304,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/myLoans?id={{id}}",
+							"raw": "{{baseUrl}}/myLoans?email={{email}}",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -148,8 +313,8 @@
 							],
 							"query": [
 								{
-									"key": "id",
-									"value": "{{id}}"
+									"key": "email",
+									"value": "{{email}}"
 								}
 							]
 						}
@@ -206,35 +371,6 @@
 					"response": []
 				},
 				{
-					"name": "/apiLogin",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"happy@example.com\",\r\n    \"password\": \"EazyBytes@12345\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/apiLogin",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"apiLogin"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "/contact",
 					"request": {
 						"auth": {
@@ -244,7 +380,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"contactName\": \"Madan Reddy\",\r\n    \"contactEmail\": \"tutor@eazybytes.com\",\r\n    \"subject\": \"Need a new saving account\",\r\n    \"message\": \"I want to open a new saving account in EazyBank\"\r\n}",
+							"raw": "[\r\n    {\r\n        \"contactName\": \"Madan Reddy\",\r\n        \"contactEmail\": \"tutor@eazybytes.com\",\r\n        \"subject\": \"Need a new saving account\",\r\n        \"message\": \"I want to open a new saving account in EazyBank\"\r\n    }\r\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -270,16 +406,56 @@
 					},
 					"request": {
 						"auth": {
-							"type": "basic",
-							"basic": [
+							"type": "oauth2",
+							"oauth2": [
 								{
-									"key": "username",
-									"value": "{{username}}",
+									"key": "scope",
+									"value": "openid email",
 									"type": "string"
 								},
 								{
-									"key": "password",
-									"value": "{{password}}",
+									"key": "clientSecret",
+									"value": "{{oauth2clientSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "{{oauth2clientId}}",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "{{tokenEndpoint}}",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "SpringSecurityZeroToMaster",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "{{hostKeycloak}}/realms/master/protocol/openid-connect/auth",
+									"type": "string"
+								},
+								{
+									"key": "state",
+									"value": "{{$guid}}",
+									"type": "string"
+								},
+								{
+									"key": "useBrowser",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
 									"type": "string"
 								}
 							]
@@ -351,6 +527,26 @@
 		{
 			"key": "id",
 			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "oauth2clientId",
+			"value": "eazybankapi",
+			"type": "string"
+		},
+		{
+			"key": "oauth2clientSecret",
+			"value": "lwO1KItrnmCwD7Cv6FgSH8B3WlbsvbW7",
+			"type": "string"
+		},
+		{
+			"key": "email",
+			"value": "happy@example.com",
+			"type": "string"
+		},
+		{
+			"key": "tokenEndpoint",
+			"value": "http://localhost:8180/realms/eazybankdev/protocol/openid-connect/token",
 			"type": "string"
 		}
 	]
