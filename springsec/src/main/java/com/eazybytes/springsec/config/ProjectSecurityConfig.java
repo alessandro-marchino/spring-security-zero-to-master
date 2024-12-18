@@ -55,8 +55,10 @@ public class ProjectSecurityConfig {
 				.requestMatchers("/user").authenticated()
 				.requestMatchers("/notices", "/contact", "/register", "/error").permitAll())
 			.exceptionHandling(ehc -> ehc.accessDeniedHandler(new CustomAccessDeniedHandler()))
+//			.oauth2ResourceServer(rsc -> rsc
+//				.jwt(jc -> jc.jwtAuthenticationConverter(jwtAuthenticationConverter)))
 			.oauth2ResourceServer(rsc -> rsc
-				.jwt(jc -> jc.jwtAuthenticationConverter(jwtAuthenticationConverter)))
+					.opaqueToken(otc -> otc.authenticationConverter(new KeycloakOpaqueRoleConverter())))
 			.csrf(csrfConfig -> csrfConfig
 				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 				.csrfTokenRequestHandler(csrfTokenRequestHandler)
