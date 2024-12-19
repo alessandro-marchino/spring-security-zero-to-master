@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Notice } from 'src/app/model/notice.model.ts';
-import { DashboardService } from 'src/app/services/dashboard/dashboard.service';
+import { Notice } from 'src/app/model';
+import { DashboardService } from 'src/app/services';
+import { NgFor } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-notices',
-  templateUrl: './notices.component.html',
-  styleUrls: ['./notices.component.css']
+    selector: 'app-notices',
+    templateUrl: './notices.component.html',
+    styleUrls: ['./notices.component.css'],
+    imports: [NgFor, RouterLink]
 })
 export class NoticesComponent implements OnInit {
 
@@ -15,7 +18,7 @@ export class NoticesComponent implements OnInit {
 
   ngOnInit(): void {
     this.dashboardService.getNoticeDetails().subscribe(responseData => {
-      this.notices = <any> responseData.body;
+      this.notices = responseData.body ?? [];
     });
   }
 

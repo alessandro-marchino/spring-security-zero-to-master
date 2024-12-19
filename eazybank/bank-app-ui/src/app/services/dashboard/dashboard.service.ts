@@ -1,13 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { AppConstants } from "../../constants/app.constants";
-import { environment } from '../../../environments/environment';
-import { Contact } from '../../model/contact.model';
-import { Loans } from 'src/app/model/loans.model';
-import { Observable } from 'rxjs';
-import { Cards } from 'src/app/model/cards.model';
-import { AccountTransactions } from 'src/app/model/account.transactions.model';
-import { Account } from 'src/app/model/account.model';
+import { HttpClient } from '@angular/common/http';
+import { AppConstants } from 'src/app/constants';
+import { environment } from 'src/environments/environment';
+import { Contact, Loans, Cards,Account, AccountTransactions, Notice } from 'src/app/model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,13 +28,11 @@ export class DashboardService {
   }
 
   getNoticeDetails(){
-    return this.http.get(`${environment.rooturl}${AppConstants.NOTICES_API_URL}`, { observe: 'response' });
+    return this.http.get<Notice[]>(`${environment.rooturl}${AppConstants.NOTICES_API_URL}`, { observe: 'response' });
   }
 
   saveMessage(contact : Contact){
-    const contactArray = [];
-    contactArray.push(contact);
-    return this.http.post(`${environment.rooturl}${AppConstants.CONTACT_API_URL}`, contactArray, { observe: 'response', withCredentials: true });
+    return this.http.post(`${environment.rooturl}${AppConstants.CONTACT_API_URL}`, [ contact ], { observe: 'response', withCredentials: true });
   }
 
 }

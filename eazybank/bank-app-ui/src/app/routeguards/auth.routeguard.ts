@@ -1,12 +1,12 @@
 import { Injectable,inject } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivateFn, RouterStateSnapshot,Router } from '@angular/router';
-import { User } from '../model/user.model';
+import { CanActivateFn, Router } from '@angular/router';
+import { User } from 'src/app/model';
 
 @Injectable()
 export class AuthActivateRouteGuard {
   constructor(private router: Router){}
 
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivate() {
     let user = new User();
     if(sessionStorage.getItem('userdetails')){
       user = JSON.parse(sessionStorage.getItem('userdetails')!);
@@ -19,6 +19,6 @@ export class AuthActivateRouteGuard {
 
 }
 
-export const AuthGuard: CanActivateFn = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
-  return inject(AuthActivateRouteGuard).canActivate(next, state);
+export const AuthGuard: CanActivateFn = (): boolean => {
+  return inject(AuthActivateRouteGuard).canActivate();
 }
